@@ -63,7 +63,12 @@ jobs:
       run: |
         pip install scikit-learn supy xarray pandas numpy matplotlib seaborn
 
-    - name: download data
+    - name: set up CDS API
+      run: |
+        echo "url: https://cds.climate.copernicus.eu/api/v2" > ~/.cdsapi
+        echo ${{ secrets.CDS_key }} >> ~/.cdsapi
+
+        - name: download data
       run: |
         python download_era5.py
 
