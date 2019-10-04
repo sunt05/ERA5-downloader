@@ -11,7 +11,7 @@ on:
   #   tags:        # Array of patterns that match refs/tags.
   #     - v1         # Push events to v1 tag
     paths:       # Push events containing matching files
-      - 'data/site_request.csv'
+      - 'site_request.csv'
 
 jobs:
   build:
