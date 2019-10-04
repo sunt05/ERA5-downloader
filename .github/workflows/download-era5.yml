@@ -68,7 +68,7 @@ jobs:
         echo "url: https://cds.climate.copernicus.eu/api/v2" > ~/.cdsapi
         echo ${{ secrets.CDS_key }} >> ~/.cdsapi
 
-        - name: download data
+    - name: download data
       run: |
         python download_era5.py
 
