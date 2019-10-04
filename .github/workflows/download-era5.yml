@@ -12,6 +12,7 @@ on:
   #     - v1         # Push events to v1 tag
     paths:       # Push events containing matching files
       - 'site_request.csv'
+      - '.github/workflows/download-era5.yml'
 
 jobs:
   build:
