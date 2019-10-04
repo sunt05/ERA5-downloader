@@ -1,0 +1,76 @@
+name: Download and Save ERA5
+
+on:
+  # File paths to consider in the event. Optional; defaults to all
+  push:
+    branches:    # Array of patterns that match refs/heads
+      - master     # Push events on master branch
+      # - test-dev
+  #     - 'releases/*' # Push events to branches matching refs/heads/releases/*
+  #     - '!refs/pull/*'
+  #   tags:        # Array of patterns that match refs/tags.
+  #     - v1         # Push events to v1 tag
+    paths:       # Push events containing matching files
+      - 'data/site_request.csv'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Fix up git URLs
+      run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
+    - uses: actions/checkout@master
+      with:
+        submodules: true
+        token: ${{ secrets.PAT }}
+    - name: Setup git user
+      env:
+        ACCESS_TOKEN: ${{ secrets.PAT }}
+      run: |
+        if [ -z "$COMMIT_EMAIL" ]
+        then
+          COMMIT_EMAIL="${GITHUB_ACTOR}@users.noreply.github.com"
+        fi
+
+        if [ -z "$COMMIT_NAME" ]
+        then
+          COMMIT_NAME="${GITHUB_ACTOR}"
+        fi
+        git config --global credential.helper store && \
+        git config --global user.email "${COMMIT_EMAIL}" && \
+        git config --global user.name "${COMMIT_NAME}" && \
+        REPOSITORY_PATH="https://${ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+    - name: show contents
+      run: ls -l .
+
+    # - name: install dependencies
+    #   run: |
+    #     sudo add-apt-repository universe
+    #     sudo apt update
+    #     sudo apt install texlive-xetex
+    #     sudo apt-get install gfortran pandoc
+
+    - name: Setup Python for use with actions
+      uses: actions/setup-python@master
+      with:
+        python-version: '3.7' # Version range or exact version of a Python version to use, using semvers version range syntax.
+        architecture: 'x64' # (x64 or x86)
+
+    - name: install supy
+      run: |
+        pip install scikit-learn supy xarray pandas numpy matplotlib seaborn
+
+    - name: download data
+      run: |
+        python download_era5.py
+
+    - name: Commit changes
+      uses: elstudio/actions-js-build/commit@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
+        # PUSH_BRANCH: 'staging'
+
+
