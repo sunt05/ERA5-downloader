@@ -68,6 +68,7 @@ jobs:
       run: |
         echo "url: https://cds.climate.copernicus.eu/api/v2" > ~/.cdsapirc
         echo ${{ secrets.CDS_key }} >> ~/.cdsapirc
+        cat ~/.cdsapirc
 
     - name: download data
       run: |
