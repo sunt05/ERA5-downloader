@@ -1,7 +1,14 @@
 #!/usr/bin/env python
 import cdsapi
+from pathlib import Path
+
+print('cdsapirc:')
+with open(Path('~/.cdsapirc').expanduser(), 'r') as fin:
+    print(fin.read())
+
 c = cdsapi.Client()
-c.retrieve("reanalysis-era5-pressure-levels",
+c.retrieve(
+    "reanalysis-era5-pressure-levels",
            {
                "variable": "temperature",
                "pressure_level": "1000",
