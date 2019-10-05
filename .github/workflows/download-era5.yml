@@ -16,7 +16,7 @@ on:
       - '.github/workflows/download-era5.yml'
 
 jobs:
-  build:
+  download:
 
     runs-on: ubuntu-latest
 
@@ -61,9 +61,10 @@ jobs:
         python-version: '3.7' # Version range or exact version of a Python version to use, using semvers version range syntax.
         architecture: 'x64' # (x64 or x86)
 
-    # - name: install supy
-    #   run: |
-    #     pip install scikit-learn supy xarray pandas numpy matplotlib seaborn
+    - name: install supy
+      run: |
+        pip install cdsapi
+        # pip install scikit-learn supy xarray pandas numpy matplotlib seaborn
 
     - name: set up CDS API
       env:
