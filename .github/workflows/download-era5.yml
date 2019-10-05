@@ -66,8 +66,8 @@ jobs:
 
     - name: set up CDS API
       run: |
-        echo "url: https://cds.climate.copernicus.eu/api/v2" > ~/.cdsapi
-        echo ${{ secrets.CDS_key }} >> ~/.cdsapi
+        echo "url: https://cds.climate.copernicus.eu/api/v2" > ~/.cdsapirc
+        echo ${{ secrets.CDS_key }} >> ~/.cdsapirc
 
     - name: download data
       run: |
