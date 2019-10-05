@@ -84,11 +84,32 @@ jobs:
         # python download_era5.py
         git status
 
-    - name: Commit changes
-      uses: elstudio/actions-js-build/commit@v2
+    - name: push changes
       env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
-        DEBUG: true
-        PUSH_BRANCH: 'master'
+        PUSH_BRANCH: master
+      run: |
+        # Set up .netrc file with GitHub credentials
+        git_setup ( ) {
+          cat <<- EOF > $HOME/.netrc
+            machine github.com
+            login $GITHUB_ACTOR
+            password $GITHUB_TOKEN
+            machine api.github.com
+            login $GITHUB_ACTOR
+            password $GITHUB_TOKEN
+        EOF
+          chmod 600 $HOME/.netrc
+        git_setup
+        git checkout $PUSH_BRANCH
+        git add .
+        git commit -m "Regenerate build artifacts."
+        git push --set-upstream origin $PUSH_BRANCH
+
+    # - name: Commit changes
+    #   uses: elstudio/actions-js-build/commit@v2
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.PAT }}
+    #     DEBUG: true
+    #     PUSH_BRANCH: 'master'
 
 
