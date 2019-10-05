@@ -82,6 +82,6 @@ jobs:
       uses: elstudio/actions-js-build/commit@v2
       env:
         GITHUB_TOKEN: ${{ secrets.PAT }}
-        PUSH_BRANCH: 'staging'
+        # PUSH_BRANCH: 'staging'
 
 
