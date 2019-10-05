@@ -9,7 +9,7 @@ from supy.util._era5 import roundPartial
 
 
 #%%
-path_root=Path('.')
+path_root=Path('.').resolve()
 os.chdir(path_root)
 
 
