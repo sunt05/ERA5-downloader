@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 #%%
 # load packages
 import supy as sp
