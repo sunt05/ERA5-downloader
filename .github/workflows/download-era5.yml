@@ -89,6 +89,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.PAT }}
         DEBUG: true
-        # PUSH_BRANCH: 'staging'
+        PUSH_BRANCH: 'master'
 
 
