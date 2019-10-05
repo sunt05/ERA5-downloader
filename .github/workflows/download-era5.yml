@@ -76,7 +76,8 @@ jobs:
 
     - name: download data
       run: |
-        python download_era5.py
+        python test-cds.py
+        # python download_era5.py
         git status
 
     - name: Commit changes
