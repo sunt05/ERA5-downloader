@@ -63,8 +63,7 @@ jobs:
 
     - name: install supy
       run: |
-        pip install cdsapi
-        # pip install scikit-learn supy xarray pandas numpy matplotlib seaborn
+        pip install scikit-learn supy xarray pandas numpy matplotlib seaborn
 
     - name: set up CDS API
       env:
@@ -77,8 +76,7 @@ jobs:
 
     - name: download data
       run: |
-        python test-cds.py
-        # python download_era5.py
+        python download_era5.py
 
     # - name: Commit changes
     #   uses: elstudio/actions-js-build/commit@v2
