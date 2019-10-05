@@ -87,6 +87,7 @@ jobs:
     - name: push changes
       env:
         PUSH_BRANCH: master
+        GITHUB_TOKEN: ${{ secrets.PAT }}
       run: |
         # Set up .netrc file with GitHub credentials
         git_setup ( ) {
