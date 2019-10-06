@@ -28,3 +28,7 @@ latitude,longitude,start,end,scale
 These headings are the same as arguments set in [`supy.util.download_era5`](https://supy.readthedocs.io/en/latest/api/supy.util/supy.util.download_era5.html#supy.util.download_era5).
 
 The download task is handled by `download_era5.py`, which will loop over all records in `site_request.csv` to get the requested data.
+
+> Note:
+> Given the limit by GitHub Actions, it is suggested to set a time span of <1 year in each request; otherwise no data would be effectively pushed back to the repo.
+
