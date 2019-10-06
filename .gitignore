@@ -104,4 +104,4 @@ venv.bak/
 .mypy_cache/
 
 # log files
-SuPy.log
+SuPy.log.*
