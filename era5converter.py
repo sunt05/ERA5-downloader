@@ -6,15 +6,17 @@ Created on Tue Oct 15 09:47:33 2019
 """
 import atmosp
 import pandas as pd
-df_input=pd.read_csv('cq_2013_data_60.txt',sep='\s+')
+#df_input=pd.read_csv('cq_2013_data_60.txt',sep='\s+')
 from netCDF4 import Dataset
 import pathlib
 import time
-p = pathlib.Path('.')
-path=(p/'data'/'29.625N106.5E')
+
 g0=9.80665
 global columns
-columns=df_input.columns
+columns=['iy', 'id', 'it', 'imin', 'qn', 'qh', 'qe', 'qs', 'qf', 'U', 'RH',
+       'Tair', 'pres', 'rain', 'kdown', 'snow', 'ldown', 'fcld', 'wuh', 'xsmd',
+       'lai', 'kdiff', 'kdir', 'wdir']
+
 #for i in path:
 #    print(i)
 #    nc=Dataset(i)
@@ -119,28 +121,33 @@ def gen_input_data(df_sfc,df_ml,year):
        'lai', 'kdiff', 'kdir', 'wdir','snow']:
         df_out[var]=-999
     df_out['U']=df1_ml['U']
-    df_out['RH']=df1_sfc['RH']
-    df_out['Tair']=df1_sfc['t2m']-273.15
+    df_out['RH']=df1_ml['t']
+    df_out['Tair']=df1_ml['t']-273.15
     df_out['pres']=df1_ml['p']
     df_out['kdown']=df1_sfc['ssrd']
     df_out['rain']=df1_sfc['tp']
     df_out['ldown']=df1_sfc['strd']
     df_out=df_out[columns]
     return df_out
+def gen_data_from_era5(path,year,filecode):
+    df_sfc=pd.concat(sfc(Dataset(i))  for i in path.glob('*sfc*.nc'))
+    df_ml=pd.concat(ml(Dataset(i))  for i in path.glob('*ml*.nc'))
+    h=(df_sfc.sp/100-df_ml.p)/g0
+    print(h.mean())
+    df_out=gen_input_data(df_sfc,df_ml,year).round(2)
+    df_out.reset_index(drop=True,inplace=True)
+    out_path='./output/'+filecode+'_'+str(year)+'_data_60.txt'
+    df_out.to_csv(out_path,sep=' ')
+    return out_path,h.mean()
+if __name__ == '__main__':    
+    p = pathlib.Path('.')
+    path=(p/'data'/'29.625N106.5E')
+    gen_data_from_era5(path,2013,'cq')
+
+
     
-df_sfc=pd.concat(sfc(Dataset(i))  for i in path.rglob('*sfc*.nc'))
-df_ml=pd.concat(ml(Dataset(i))  for i in path.rglob('*ml*.nc'))
-p=(df_sfc.sp/100-df_ml.p)/g0
-print(p.mean())
-
-df_out=gen_input_data(df_sfc,df_ml,2013).round(2)
-df_out.reset_index(drop=True,inplace=True)
-df_out.to_csv('./output/cq_2013_data_60.txt',sep=' ')
-#df_out.drop(columns=['U'],inplace=True)
 
 
-#df_out['U']=df.loc['2013 1 1 01':'2014 1 1 00'].reset_index()['u10']
-#df_out=df_out[columns]
-##df_out.to_csv('cq_2013_data_60.txt1',sep=' ')
+
 
 
