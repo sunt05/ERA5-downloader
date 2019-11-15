@@ -67,7 +67,7 @@ jobs:
     - name: install supy
       run: |
         # pip install scikit-learn supy xarray pandas numpy matplotlib seaborn
-        pip install supy
+        pip install supy==2019.11.15.dev0
 
     - name: set up CDS API
       env:
