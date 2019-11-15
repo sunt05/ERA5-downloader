@@ -47,7 +47,8 @@ for ind in df_request.index:
     start_x,end_x=df_request.loc[ind,['start','end']]
 
 
-    dict_era5=sp.util.download_era5(lat_c,lon_c,start_x,end_x)
+    # dict_era5=sp.util.download_era5(lat_c,lon_c,start_x,end_x)
+    list_fn_forcing=sp.util.gen_forcing_era5(lat_c,lon_c,start_x,end_x)
 
     os.chdir(path_root)
 
