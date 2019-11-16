@@ -32,7 +32,6 @@ for ind in df_request.index:
     grid = [0.125, 0.125]
 
     lat_c, lon_c = (roundPartial(x, grid[0]) for x in [lat_x, lon_x])
-    lat_c, lon_c
 
     lat_x = f'{lat_c}N' if lat_c > 0 else f'{-lat_c}S'
     lon_x = f'{lon_c}E' if lon_c > 0 else f'{-lon_c}W'
@@ -43,11 +42,15 @@ for ind in df_request.index:
 
     start_x, end_x = df_request.loc[ind, ['start', 'end']]
 
+    # note: `scale` is currently not used.
+    scale_x = df_request.loc[ind, 'scale']
+
     logger_supy.info(f'working on {lat_c}, {lon_c}, {start_x}, {end_x}:')
 
     try:
         # examine if requested files have already been downloaded
-        list_fn_sfc, list_fn_ml = load_filelist_era5(lat_c, lon_c, start_x, end_x)
+        list_fn_sfc, list_fn_ml = load_filelist_era5(lat_c, lon_c, start_x,
+                                                     end_x)
         logger_supy.info(f'requested files are existing!')
     except:
         logger_supy.info(f'downloading started!')
