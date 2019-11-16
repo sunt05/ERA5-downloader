@@ -1,7 +1,7 @@
-# ERA5-Data
-ERA5 data at near surface levels
+# ERA5 Downloader
+Download ERA5 data at near surface levels to drive land surface models.
 
-## What are there?
+## What are included?
 
 ``` bash
 # tree  -L 1
@@ -14,7 +14,7 @@ ERA5 data at near surface levels
 
 ```
 
-## How to use?
+## How to use this repo?
 
 This repo is set up to use GitHub Actions to automatically download ERA5 data.
 
