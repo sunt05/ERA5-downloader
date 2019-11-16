@@ -1,5 +1,5 @@
-# ERA5-Data
-ERA5 data at near surface levels
+# ERA5 Downloader
+Download ERA5 data at near surface levels to drive land surface models.
 
 ## What are included?
 
