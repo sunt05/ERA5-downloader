@@ -1,7 +1,7 @@
 # ERA5-Data
 ERA5 data at near surface levels
 
-## What are included there?
+## What are included?
 
 ``` bash
 # tree  -L 1
