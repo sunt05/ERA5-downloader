@@ -49,9 +49,17 @@ for ind in df_request.index:
 
     try:
         # examine if requested files have already been downloaded
-        list_fn_sfc, list_fn_ml = load_filelist_era5(lat_c, lon_c, start_x,
-                                                     end_x)
-        logger_supy.info(f'requested files are existing!')
+        list_fn_sfc, list_fn_ml = load_filelist_era5(
+            lat_c,
+            lon_c,
+            start_x,
+            end_x,
+        )
+        list_existq=[Path(fn).exists() for fn in list_fn_sfc+ list_fn_ml]
+        if np.all(list_existq):
+            logger_supy.info(f'requested files are existing!')
+        else:
+            raise FileNotFoundError('some of the requested files are missing')
     except:
         logger_supy.info(f'downloading started!')
         # download requested files then exit otherwise GH would timeout for many requests
