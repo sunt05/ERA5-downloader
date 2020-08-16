@@ -37,9 +37,10 @@ for ind in df_request.index:
     grid = [0.125, 0.125]
 
     lat_c, lon_c = (roundPartial(x, grid[0]) for x in [lat_x, lon_x])
+    lat_x, lon_x = lat_c, lon_c
     # identify the upper-left grid for naming
-    lat_x = lat_x + grid[0] * scale_x
-    lon_x = lon_x - grid[0] * scale_x
+    # lat_x = lat_x + grid[0] * scale_x
+    # lon_x = lon_x - grid[0] * scale_x
 
     lat_x = f"{lat_x}N" if lat_x > 0 else f"{-lat_x}S"
     lon_x = f"{lon_x}E" if lon_x > 0 else f"{-lon_x}W"
